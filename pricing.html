@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>الأسعار — Vox Space</title>
+<link rel="icon" href="/img/logo.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#080812;--surface:#0f0f1e;--surface2:#161628;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.1);--violet:#6c47ff;--violet2:#8b6bff;--violet4:rgba(108,71,255,0.08);--white:#eeeeff;--mid:#9494b8;--dim:#55556e;--green:#22d47a;--font-display:'Space Grotesk','Noto Sans Arabic',sans-serif;--font-body:'Inter','Noto Sans Arabic',sans-serif;--font-mono:'JetBrains Mono',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:var(--font-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.en,body.fr{direction:ltr}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(108,71,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(108,71,255,0.03) 1px,transparent 1px);background-size:80px 80px}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(8,8,18,0.9);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-brand img{height:32px;width:auto}
+.nav-brand span{font-family:var(--font-display);font-weight:700;font-size:17px;color:var(--white);letter-spacing:-0.3px}
+.nav-center{display:flex;gap:4px;list-style:none}
+.nav-center a{display:block;padding:6px 14px;color:var(--mid);font-size:14px;font-weight:500;text-decoration:none;border-radius:7px;transition:color .2s,background .2s}
+.nav-center a:hover{color:var(--white);background:var(--surface2)}
+.nav-end{display:flex;align-items:center;gap:12px}
+.lang-group{display:flex;gap:2px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:3px}
+.lang-btn{background:none;border:none;cursor:pointer;font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--dim);padding:4px 9px;border-radius:5px;transition:all .2s;letter-spacing:.5px}
+.lang-btn.on{background:var(--violet);color:#fff}
+.btn-line{background:none;border:1px solid var(--border2);color:var(--white);padding:7px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s;font-family:var(--font-body)}
+.btn-line:hover{border-color:var(--violet);color:var(--violet2)}
+.btn-fill{background:var(--violet);border:none;color:#fff;padding:8px 20px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .25s;font-family:var(--font-body)}
+.btn-fill:hover{background:var(--violet2)}
+.page-top{padding:140px 40px 64px;text-align:center;position:relative;overflow:hidden}
+.page-orb{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(108,71,255,.1) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.kicker{font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--violet2);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:14px}
+.page-h{font-family:var(--font-display);font-size:clamp(38px,6vw,68px);font-weight:700;letter-spacing:-2px;line-height:1.05;margin-bottom:18px}
+.page-sub{font-size:17px;color:var(--mid);max-width:440px;margin:0 auto;line-height:1.8}
+.wrap{max-width:1100px;margin:0 auto;padding:0 40px}
+
+/* PRICING GRID */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:64px 0 80px}
+.plan{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:36px;position:relative;transition:border-color .25s}
+.plan.featured{border-color:rgba(108,71,255,.5)}
+.plan.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--violet),transparent);border-radius:16px 16px 0 0}
+.plan-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--violet);color:#fff;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:1px;padding:4px 12px;border-radius:100px;white-space:nowrap;text-transform:uppercase}
+.plan-name{font-family:var(--font-display);font-size:14px;font-weight:600;color:var(--mid);letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;font-family:var(--font-mono)}
+.plan-price{font-family:var(--font-display);font-size:52px;font-weight:700;letter-spacing:-2px;line-height:1;color:var(--white)}
+.plan-price sub{font-size:16px;font-weight:400;color:var(--mid);letter-spacing:0;font-family:var(--font-body)}
+.plan-price sup{font-size:22px;font-weight:600;letter-spacing:0;vertical-align:super}
+.plan-cycle{font-size:13px;color:var(--dim);margin:6px 0 20px}
+.plan-desc{font-size:13px;color:var(--mid);line-height:1.75;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.plan-btn{display:block;width:100%;padding:11px;border-radius:9px;font-size:13px;font-weight:700;text-align:center;text-decoration:none;cursor:pointer;transition:all .2s;font-family:var(--font-body);border:none;letter-spacing:-.1px}
+.plan-btn-fill{background:var(--violet);color:#fff}
+.plan-btn-fill:hover{background:var(--violet2);box-shadow:0 0 20px rgba(108,71,255,.35)}
+.plan-btn-line{background:none;border:1px solid var(--border2);color:var(--white)}
+.plan-btn-line:hover{border-color:var(--violet);color:var(--violet2)}
+.plan-features{margin-top:24px;display:flex;flex-direction:column;gap:10px}
+.pf{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--mid)}
+.pf svg{width:15px;height:15px;flex-shrink:0;margin-top:1px}
+.pf.yes svg{stroke:var(--green);fill:none}
+.pf.no svg{stroke:var(--dim);fill:none}
+.pf.no span{color:var(--dim)}
+
+/* COMPARE TABLE */
+.compare{margin:0 0 80px}
+.compare-title{font-family:var(--font-display);font-size:clamp(22px,3vw,36px);font-weight:700;letter-spacing:-1px;margin-bottom:32px}
+table{width:100%;border-collapse:collapse}
+thead th{padding:12px 16px;font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid var(--border);text-align:center}
+thead th:first-child{text-align:right}
+body.en thead th:first-child,body.fr thead th:first-child{text-align:left}
+tbody tr{border-bottom:1px solid var(--border)}
+tbody tr:hover{background:var(--surface)}
+tbody td{padding:14px 16px;font-size:13px;color:var(--mid);text-align:center}
+tbody td:first-child{text-align:right;color:var(--white);font-weight:500}
+body.en tbody td:first-child,body.fr tbody td:first-child{text-align:left}
+.tick{color:var(--green)}
+.cross{color:var(--dim)}
+.cell-val{color:var(--white);font-weight:600;font-family:var(--font-mono);font-size:12px}
+
+/* FAQ */
+.faq-section{padding:0 0 80px}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-btn{width:100%;display:flex;justify-content:space-between;align-items:center;padding:20px 0;cursor:pointer;background:none;border:none;color:var(--white);font-family:var(--font-body);font-size:14px;font-weight:600;text-align:right;gap:16px}
+body.en .faq-btn,body.fr .faq-btn{text-align:left}
+.faq-btn svg{width:18px;height:18px;stroke:var(--violet2);fill:none;flex-shrink:0;transition:transform .3s}
+.faq-btn.open svg{transform:rotate(45deg)}
+.faq-body{font-size:13px;color:var(--mid);line-height:1.8;padding-bottom:20px;display:none}
+.faq-body.open{display:block}
+
+footer{border-top:1px solid var(--border);background:var(--surface);padding:40px;margin-top:0}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center}
+.foot-bottom p{font-size:12px;color:var(--dim)}
+.foot-right{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;color:var(--dim)}
+.foot-right img{height:20px;opacity:.6}
+
+.sr{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
+.sr.in{opacity:1;transform:none}
+@media(max-width:900px){nav{padding:0 20px}.nav-center{display:none}.wrap{padding:0 20px}.pricing-grid{grid-template-columns:1fr}.foot-bottom{flex-direction:column;gap:12px}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-brand"><img src="/img/logo.png" alt="Vox Space"/><span>VOX SPACE</span></a>
+  <ul class="nav-center">
+    <li><a href="/docs.html"    data-i18n="nav_docs">التوثيق</a></li>
+    <li><a href="/pricing.html" data-i18n="nav_pricing">الأسعار</a></li>
+    <li><a href="/status.html"  data-i18n="nav_status">الحالة</a></li>
+    <li><a href="/about.html"   data-i18n="nav_about">من نحن</a></li>
+  </ul>
+  <div class="nav-end">
+    <div class="lang-group">
+      <button class="lang-btn on" onclick="setLang('ar')">ع</button>
+      <button class="lang-btn"    onclick="setLang('en')">EN</button>
+      <button class="lang-btn"    onclick="setLang('fr')">FR</button>
+    </div>
+    <a href="/auth/login.html"    class="btn-line" data-i18n="nav_login">دخول</a>
+    <a href="/auth/register.html" class="btn-fill" data-i18n="nav_cta">ابدأ مجاناً</a>
+  </div>
+</nav>
+
+<div class="page-top">
+  <div class="page-orb"></div>
+  <div style="position:relative;z-index:1">
+    <div class="kicker" data-i18n="kicker">الأسعار</div>
+    <h1 class="page-h" data-i18n="page_h">شفاف وبسيط</h1>
+    <p class="page-sub" data-i18n="page_sub">لا رسوم خفية. لا مفاجآت. الخطة المجانية مجانية حقيقية وللأبد.</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="pricing-grid sr">
+
+    <!-- FREE -->
+    <div class="plan">
+      <div class="plan-name">FREE</div>
+      <div class="plan-price"><sup>$</sup>0</div>
+      <div class="plan-cycle" data-i18n="forever">للأبد · لا بطاقة ائتمان</div>
+      <p class="plan-desc" data-i18n="p1_desc">للمطورين الأفراد والمشاريع الشخصية والتجارب.</p>
+      <a href="/auth/register.html" class="plan-btn plan-btn-line" data-i18n="p1_btn">ابدأ مجاناً</a>
+      <div class="plan-features">
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_50">50 مشروع</span></div>
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_sub">سب-دومين على voxspace</span></div>
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_ssl">SSL تلقائي</span></div>
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_deploy">نشر تلقائي</span></div>
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_analytics">Analytics أساسي</span></div>
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_custom">دومين مخصص</span></div>
+        <div class="pf no"><svg viewBox="0 0 24 24" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span data-i18n="pf_team">أعضاء فريق</span></div>
+      </div>
+    </div>
+
+    <!-- PRO -->
+    <div class="plan featured">
+      <div class="plan-badge" data-i18n="popular">الأكثر طلباً</div>
+      <div class="plan-name">PRO</div>
+      <div class="plan-price"><sup>$</sup>9</div>
+      <div class="plan-cycle" data-i18n="per_month">شهرياً</div>
+      <p class="plan-desc" data-i18n="p2_desc">للمطورين الجادين والمشاريع المتنامية.</p>
+      <a href="/auth/register.html" class="plan-btn plan-btn-fill" data-i18n="p2_btn">ابدأ Pro</a>
+      <div class="plan-features">
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_unlimited">مشاريع غير محدودة</span></div>
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_custom">دومين مخصص</span></div>
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_ssl">SSL تلقائي</span></div>
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_deploy">نشر تلقائي</span></div>
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_adv_analytics">Analytics متقدم</span></div>
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_priority">دعم أولوية</span></div>
+        <div class="pf no"><svg viewBox="0 0 24 24" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span data-i18n="pf_team">أعضاء فريق</span></div>
+      </div>
+    </div>
+
+    <!-- TEAM -->
+    <div class="plan">
+      <div class="plan-name">TEAM</div>
+      <div class="plan-price"><sup>$</sup>29</div>
+      <div class="plan-cycle" data-i18n="per_month">شهرياً</div>
+      <p class="plan-desc" data-i18n="p3_desc">للفرق والشركات الناشئة التي تحتاج تعاوناً.</p>
+      <a href="mailto:info@voxspace.qzz.io" class="plan-btn plan-btn-line" data-i18n="p3_btn">تواصل معنا</a>
+      <div class="plan-features">
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_everything">كل مميزات Pro</span></div>
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_10_members">10 أعضاء فريق</span></div>
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_sla">SLA 99.9% مضمون</span></div>
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_dedicated">دعم مخصص</span></div>
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_invoice">فاتورة شهرية</span></div>
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_audit">سجل نشاط كامل</span></div>
+        <div class="pf yes"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pf_team">أعضاء فريق</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARE TABLE -->
+  <div class="compare sr">
+    <div class="kicker" data-i18n="cmp_k">مقارنة الخطط</div>
+    <h2 class="compare-title" data-i18n="cmp_h">كل التفاصيل</h2>
+    <table>
+      <thead>
+        <tr>
+          <th data-i18n="th_feature">الميزة</th>
+          <th>Free</th>
+          <th>Pro</th>
+          <th>Team</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td data-i18n="tr1">عدد المشاريع</td><td class="cell-val">50</td><td class="cell-val" data-i18n="unlimited">∞</td><td class="cell-val" data-i18n="unlimited">∞</td></tr>
+        <tr><td data-i18n="tr2">سب-دومين voxspace</td><td class="tick">✓</td><td class="tick">✓</td><td class="tick">✓</td></tr>
+        <tr><td data-i18n="tr3">دومين مخصص</td><td class="tick">✓</td><td class="tick">✓</td><td class="tick">✓</td></tr>
+        <tr><td data-i18n="tr4">SSL تلقائي</td><td class="tick">✓</td><td class="tick">✓</td><td class="tick">✓</td></tr>
+        <tr><td data-i18n="tr5">Analytics</td><td data-i18n="basic">أساسي</td><td data-i18n="advanced">متقدم</td><td data-i18n="advanced">متقدم</td></tr>
+        <tr><td data-i18n="tr6">حماية DDoS</td><td class="tick">✓</td><td class="tick">✓</td><td class="tick">✓</td></tr>
+        <tr><td data-i18n="tr7">أعضاء فريق</td><td class="cross">—</td><td class="cross">—</td><td class="cell-val">10</td></tr>
+        <tr><td data-i18n="tr8">SLA مضمون</td><td class="cross">—</td><td class="cross">—</td><td class="tick">✓</td></tr>
+        <tr><td data-i18n="tr9">دعم</td><td data-i18n="community">مجتمع</td><td data-i18n="priority_s">أولوية</td><td data-i18n="dedicated_s">مخصص</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section sr">
+    <div class="kicker" data-i18n="faq_k">الأسئلة الشائعة</div>
+    <h2 style="font-family:var(--font-display);font-size:clamp(22px,3vw,36px);font-weight:700;letter-spacing:-1px;margin-bottom:32px" data-i18n="faq_h">أجوبة سريعة</h2>
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        <span data-i18n="q1">هل الخطة المجانية مجانية فعلاً وللأبد؟</span>
+        <svg viewBox="0 0 24 24" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-body" data-i18n="a1">نعم. الخطة المجانية مجانية 100% بدون أي قيود زمنية. لا بطاقة ائتمان، لا تجربة مؤقتة. 50 مشروع مجاناً للأبد.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        <span data-i18n="q2">ما نوع المشاريع المدعومة؟</span>
+        <svg viewBox="0 0 24 24" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-body" data-i18n="a2">كل المشاريع الستاتيكية: HTML/CSS/JS، مواقع شخصية، portfolios، صفحات هبوط، وثائق، وأي محتوى ويب ستاتيك.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        <span data-i18n="q3">هل يمكنني الترقية أو التراجع في أي وقت؟</span>
+        <svg viewBox="0 0 24 24" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-body" data-i18n="a3">نعم، في أي وقت. عند التراجع للمجاني تبقى مشاريعك سليمة، ويتم تعطيل الميزات المدفوعة فقط.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        <span data-i18n="q4">كيف تختلف بنيتكم التحتية عن المنافسين؟</span>
+        <svg viewBox="0 0 24 24" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-body" data-i18n="a4">بنيتنا التحتية خاصة بنا بالكامل — من الشبكة إلى التخزين. هذا يعني تحكماً كاملاً في الأداء والأمان بدون اعتماد على أطراف ثالثة.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-bottom">
+    <p>© 2026 Vox Space. <span data-i18n="foot_rights">جميع الحقوق محفوظة.</span></p>
+    <div class="foot-right">
+      <img src="/img/logo.png" alt="Vox Space"/>
+      <span>voxspace.qzz.io</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(btn){btn.classList.toggle('open');btn.nextElementSibling.classList.toggle('open')}
+const i18n={ar:{nav_docs:"التوثيق",nav_pricing:"الأسعار",nav_status:"الحالة",nav_about:"من نحن",nav_login:"دخول",nav_cta:"ابدأ مجاناً",kicker:"الأسعار",page_h:"شفاف وبسيط",page_sub:"لا رسوم خفية. لا مفاجآت. الخطة المجانية مجانية حقيقية وللأبد.",forever:"للأبد · لا بطاقة ائتمان",per_month:"شهرياً",popular:"الأكثر طلباً",p1_desc:"للمطورين الأفراد والمشاريع الشخصية.",p1_btn:"ابدأ مجاناً",p2_desc:"للمطورين الجادين والمشاريع المتنامية.",p2_btn:"ابدأ Pro",p3_desc:"للفرق والشركات الناشئة.",p3_btn:"تواصل معنا",pf_50:"50 مشروع",pf_sub:"سب-دومين على voxspace",pf_ssl:"SSL تلقائي",pf_deploy:"نشر تلقائي",pf_analytics:"Analytics أساسي",pf_custom:"دومين مخصص",pf_team:"أعضاء فريق",pf_unlimited:"مشاريع غير محدودة",pf_adv_analytics:"Analytics متقدم",pf_priority:"دعم أولوية",pf_everything:"كل مميزات Pro",pf_10_members:"10 أعضاء فريق",pf_sla:"SLA 99.9% مضمون",pf_dedicated:"دعم مخصص",pf_invoice:"فاتورة شهرية",pf_audit:"سجل نشاط كامل",cmp_k:"مقارنة الخطط",cmp_h:"كل التفاصيل",th_feature:"الميزة",tr1:"عدد المشاريع",tr2:"سب-دومين voxspace",tr3:"دومين مخصص",tr4:"SSL تلقائي",tr5:"Analytics",tr6:"حماية DDoS",tr7:"أعضاء فريق",tr8:"SLA مضمون",tr9:"دعم",unlimited:"∞",basic:"أساسي",advanced:"متقدم",community:"مجتمع",priority_s:"أولوية",dedicated_s:"مخصص",faq_k:"الأسئلة الشائعة",faq_h:"أجوبة سريعة",q1:"هل الخطة المجانية مجانية فعلاً وللأبد؟",a1:"نعم. 50 مشروع مجاناً للأبد. لا بطاقة ائتمان.",q2:"ما نوع المشاريع المدعومة؟",a2:"كل المشاريع الستاتيكية: HTML/CSS/JS.",q3:"هل يمكنني الترقية أو التراجع في أي وقت؟",a3:"نعم، في أي وقت. مشاريعك تبقى سليمة.",q4:"كيف تختلف بنيتكم التحتية؟",a4:"بنيتنا خاصة بنا بالكامل — من الشبكة إلى التخزين.",foot_rights:"جميع الحقوق محفوظة."},
+en:{nav_docs:"Docs",nav_pricing:"Pricing",nav_status:"Status",nav_about:"About",nav_login:"Log in",nav_cta:"Start Free",kicker:"Pricing",page_h:"Simple & Transparent",page_sub:"No hidden fees. No surprises. Free plan is genuinely free, forever.",forever:"Forever · No credit card",per_month:"/ month",popular:"Most Popular",p1_desc:"For individual developers and personal projects.",p1_btn:"Start Free",p2_desc:"For serious developers and growing projects.",p2_btn:"Start Pro",p3_desc:"For teams and startups that need collaboration.",p3_btn:"Contact Us",pf_50:"50 projects",pf_sub:"voxspace subdomain",pf_ssl:"Automatic SSL",pf_deploy:"Auto deploy",pf_analytics:"Basic analytics",pf_custom:"Custom domain",pf_team:"Team members",pf_unlimited:"Unlimited projects",pf_adv_analytics:"Advanced analytics",pf_priority:"Priority support",pf_everything:"Everything in Pro",pf_10_members:"10 team members",pf_sla:"99.9% SLA guarantee",pf_dedicated:"Dedicated support",pf_invoice:"Monthly invoice",pf_audit:"Full activity log",cmp_k:"Plan Comparison",cmp_h:"All the details",th_feature:"Feature",tr1:"Projects",tr2:"voxspace subdomain",tr3:"Custom domain",tr4:"Automatic SSL",tr5:"Analytics",tr6:"DDoS protection",tr7:"Team members",tr8:"SLA guarantee",tr9:"Support",unlimited:"∞",basic:"Basic",advanced:"Advanced",community:"Community",priority_s:"Priority",dedicated_s:"Dedicated",faq_k:"FAQ",faq_h:"Quick Answers",q1:"Is the free plan really free forever?",a1:"Yes. 50 projects free forever. No credit card, no time limit.",q2:"What types of projects are supported?",a2:"All static projects: HTML/CSS/JS, portfolios, landing pages.",q3:"Can I upgrade or downgrade at any time?",a3:"Yes, any time. Your projects stay intact when downgrading.",q4:"How does your infrastructure differ?",a4:"Our infrastructure is entirely our own — from network to storage.",foot_rights:"All rights reserved."},
+fr:{nav_docs:"Docs",nav_pricing:"Tarifs",nav_status:"Statut",nav_about:"À propos",nav_login:"Connexion",nav_cta:"Commencer",kicker:"Tarifs",page_h:"Simple & Transparent",page_sub:"Pas de frais cachés. Le plan gratuit est vraiment gratuit, pour toujours.",forever:"Pour toujours · Sans carte",per_month:"/ mois",popular:"Le Plus Populaire",p1_desc:"Pour développeurs individuels et projets personnels.",p1_btn:"Commencer Gratuit",p2_desc:"Pour développeurs sérieux et projets en croissance.",p2_btn:"Commencer Pro",p3_desc:"Pour équipes et startups.",p3_btn:"Nous Contacter",pf_50:"50 projets",pf_sub:"sous-domaine voxspace",pf_ssl:"SSL Automatique",pf_deploy:"Déploiement auto",pf_analytics:"Analytics de base",pf_custom:"Domaine personnalisé",pf_team:"Membres d'équipe",pf_unlimited:"Projets illimités",pf_adv_analytics:"Analytics avancé",pf_priority:"Support prioritaire",pf_everything:"Tout de Pro",pf_10_members:"10 membres",pf_sla:"SLA 99.9% garanti",pf_dedicated:"Support dédié",pf_invoice:"Facture mensuelle",pf_audit:"Journal d'activité complet",cmp_k:"Comparaison des Plans",cmp_h:"Tous les détails",th_feature:"Fonctionnalité",tr1:"Projets",tr2:"Sous-domaine voxspace",tr3:"Domaine personnalisé",tr4:"SSL Automatique",tr5:"Analytics",tr6:"Protection DDoS",tr7:"Membres d'équipe",tr8:"SLA garanti",tr9:"Support",unlimited:"∞",basic:"Basique",advanced:"Avancé",community:"Communauté",priority_s:"Prioritaire",dedicated_s:"Dédié",faq_k:"FAQ",faq_h:"Réponses Rapides",q1:"Le plan gratuit est-il vraiment gratuit pour toujours?",a1:"Oui. 50 projets gratuits pour toujours. Sans carte de crédit.",q2:"Quels types de projets sont supportés?",a2:"Tous les projets statiques: HTML/CSS/JS.",q3:"Puis-je changer de plan à tout moment?",a3:"Oui, à tout moment. Vos projets restent intacts.",q4:"En quoi votre infrastructure diffère-t-elle?",a4:"Notre infrastructure nous appartient entièrement.",foot_rights:"Tous droits réservés."}};
+function setLang(lang){document.documentElement.lang=lang;document.body.dir=lang==='ar'?'rtl':'ltr';document.body.className=lang==='ar'?'':lang;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('on'));document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('on');const t=i18n[lang];document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k])el.textContent=t[k]})}
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.08});
+document.querySelectorAll('.sr').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

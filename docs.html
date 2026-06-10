@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>التوثيق — Vox Space</title>
+<link rel="icon" href="/img/logo.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#080812;--surface:#0f0f1e;--surface2:#161628;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.1);--violet:#6c47ff;--violet2:#8b6bff;--violet4:rgba(108,71,255,0.08);--white:#eeeeff;--mid:#9494b8;--dim:#55556e;--green:#22d47a;--font-display:'Space Grotesk','Noto Sans Arabic',sans-serif;--font-body:'Inter','Noto Sans Arabic',sans-serif;--font-mono:'JetBrains Mono',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:var(--font-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.en,body.fr{direction:ltr}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(108,71,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(108,71,255,0.03) 1px,transparent 1px);background-size:80px 80px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(8,8,18,0.9);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-brand img{height:32px;width:auto}
+.nav-brand span{font-family:var(--font-display);font-weight:700;font-size:17px;color:var(--white);letter-spacing:-0.3px}
+.nav-center{display:flex;gap:4px;list-style:none}
+.nav-center a{display:block;padding:6px 14px;color:var(--mid);font-size:14px;font-weight:500;text-decoration:none;border-radius:7px;transition:color .2s,background .2s}
+.nav-center a:hover{color:var(--white);background:var(--surface2)}
+.nav-end{display:flex;align-items:center;gap:12px}
+.lang-group{display:flex;gap:2px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:3px}
+.lang-btn{background:none;border:none;cursor:pointer;font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--dim);padding:4px 9px;border-radius:5px;transition:all .2s}
+.lang-btn.on{background:var(--violet);color:#fff}
+.btn-line{background:none;border:1px solid var(--border2);color:var(--white);padding:7px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s;font-family:var(--font-body)}
+.btn-line:hover{border-color:var(--violet);color:var(--violet2)}
+.btn-fill{background:var(--violet);border:none;color:#fff;padding:8px 20px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .25s;font-family:var(--font-body)}
+.btn-fill:hover{background:var(--violet2)}
+
+/* LAYOUT */
+.docs-layout{display:grid;grid-template-columns:260px 1fr;min-height:100vh;padding-top:64px}
+
+/* SIDEBAR */
+.sidebar{position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;border-left:1px solid var(--border);padding:32px 0;background:var(--surface)}
+body.en .sidebar,body.fr .sidebar{border-left:none;border-right:1px solid var(--border)}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-track{background:transparent}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+.sb-section{margin-bottom:28px;padding:0 20px}
+.sb-label{font-family:var(--font-mono);font-size:10px;font-weight:600;color:var(--dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;padding:0 8px}
+.sb-link{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;color:var(--mid);font-size:13px;text-decoration:none;transition:all .2s;cursor:pointer;border:none;background:none;width:100%;font-family:var(--font-body);text-align:right}
+body.en .sb-link,body.fr .sb-link{text-align:left}
+.sb-link:hover{color:var(--white);background:var(--surface2)}
+.sb-link.active{color:var(--violet2);background:var(--violet4)}
+.sb-link svg{width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none}
+
+/* CONTENT */
+.docs-content{padding:48px 64px;max-width:820px}
+.doc-section{display:none}
+.doc-section.active{display:block}
+.doc-h1{font-family:var(--font-display);font-size:clamp(28px,4vw,42px);font-weight:700;letter-spacing:-1.5px;margin-bottom:12px}
+.doc-lead{font-size:16px;color:var(--mid);line-height:1.8;margin-bottom:40px;max-width:580px}
+.doc-h2{font-family:var(--font-display);font-size:22px;font-weight:700;letter-spacing:-0.5px;margin:40px 0 14px;padding-top:40px;border-top:1px solid var(--border)}
+.doc-h2:first-of-type{border-top:none;padding-top:0;margin-top:0}
+.doc-p{font-size:14px;color:var(--mid);line-height:1.85;margin-bottom:16px}
+.doc-ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.doc-ul li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--mid);line-height:1.7}
+.doc-ul li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--violet);flex-shrink:0;margin-top:8px}
+.code-block{background:var(--surface);border:1px solid var(--border2);border-radius:10px;overflow:hidden;margin:16px 0 24px}
+.code-bar{background:var(--surface2);padding:8px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.code-bar span{font-family:var(--font-mono);font-size:11px;color:var(--dim);letter-spacing:.5px}
+.copy-btn{background:none;border:1px solid var(--border);color:var(--dim);font-size:11px;padding:3px 10px;border-radius:5px;cursor:pointer;font-family:var(--font-mono);transition:all .2s}
+.copy-btn:hover{border-color:var(--violet2);color:var(--violet2)}
+.code-body{padding:20px;font-family:var(--font-mono);font-size:13px;line-height:1.7;overflow-x:auto}
+.code-body pre{margin:0;white-space:pre-wrap}
+.kw{color:#c084fc}.str{color:#86efac}.cm{color:var(--dim);font-style:italic}.fn{color:#93c5fd}.num{color:#fbbf24}
+.step-cards{display:flex;flex-direction:column;gap:12px;margin:20px 0}
+.step-card{display:flex;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px}
+.step-card-num{font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--violet2);background:var(--violet4);border:1px solid rgba(108,71,255,.2);width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-card-t{font-family:var(--font-display);font-size:14px;font-weight:600;margin-bottom:4px}
+.step-card-d{font-size:13px;color:var(--mid);line-height:1.7}
+.alert{border-radius:10px;padding:14px 18px;font-size:13px;line-height:1.7;margin:16px 0;display:flex;gap:10px;align-items:flex-start}
+.alert svg{width:16px;height:16px;flex-shrink:0;margin-top:1px;fill:none}
+.alert-info{background:rgba(108,71,255,.06);border:1px solid rgba(108,71,255,.2);color:var(--mid)}
+.alert-info svg{stroke:var(--violet2)}
+.alert-success{background:rgba(34,212,122,.06);border:1px solid rgba(34,212,122,.2);color:var(--mid)}
+.alert-success svg{stroke:var(--green)}
+
+/* SEARCH BAR */
+.docs-search{margin-bottom:28px;padding:0 20px}
+.search-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--white);font-family:var(--font-body);font-size:13px;outline:none;transition:border-color .2s}
+.search-input:focus{border-color:var(--violet2)}
+.search-input::placeholder{color:var(--dim)}
+
+footer{border-top:1px solid var(--border);background:var(--surface);padding:32px 40px}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center}
+.foot-bottom p{font-size:12px;color:var(--dim)}
+.foot-right{display:flex;align-items:center;gap:8px}
+.foot-right img{height:20px;opacity:.5}
+
+@media(max-width:900px){nav{padding:0 20px}.nav-center{display:none}.docs-layout{grid-template-columns:1fr}.sidebar{display:none}.docs-content{padding:32px 20px}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-brand"><img src="/img/logo.png" alt="Vox Space"/><span>VOX SPACE</span></a>
+  <ul class="nav-center">
+    <li><a href="/docs.html"    data-i18n="nav_docs">التوثيق</a></li>
+    <li><a href="/pricing.html" data-i18n="nav_pricing">الأسعار</a></li>
+    <li><a href="/status.html"  data-i18n="nav_status">الحالة</a></li>
+    <li><a href="/about.html"   data-i18n="nav_about">من نحن</a></li>
+  </ul>
+  <div class="nav-end">
+    <div class="lang-group">
+      <button class="lang-btn on" onclick="setLang('ar')">ع</button>
+      <button class="lang-btn"    onclick="setLang('en')">EN</button>
+      <button class="lang-btn"    onclick="setLang('fr')">FR</button>
+    </div>
+    <a href="/auth/login.html"    class="btn-line" data-i18n="nav_login">دخول</a>
+    <a href="/auth/register.html" class="btn-fill" data-i18n="nav_cta">ابدأ مجاناً</a>
+  </div>
+</nav>
+
+<div class="docs-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="docs-search">
+      <input class="search-input" type="text" placeholder="ابحث في التوثيق..." id="searchInput" oninput="searchDocs(this.value)"/>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label" data-i18n="sb_start">البداية</div>
+      <button class="sb-link active" onclick="showDoc('intro')">
+        <svg viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg>
+        <span data-i18n="doc_intro">مقدمة</span>
+      </button>
+      <button class="sb-link" onclick="showDoc('quickstart')">
+        <svg viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+        <span data-i18n="doc_quick">البدء السريع</span>
+      </button>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label" data-i18n="sb_deploy">النشر</div>
+      <button class="sb-link" onclick="showDoc('github')">
+        <svg viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"/></svg>
+        <span data-i18n="doc_github">نشر عبر GitHub</span>
+      </button>
+      <button class="sb-link" onclick="showDoc('zip')">
+        <svg viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
+        <span data-i18n="doc_zip">رفع ZIP</span>
+      </button>
+      <button class="sb-link" onclick="showDoc('files')">
+        <svg viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+        <span data-i18n="doc_files">رفع ملفات</span>
+      </button>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label" data-i18n="sb_domains">الدومينات</div>
+      <button class="sb-link" onclick="showDoc('subdomain')">
+        <svg viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3"/></svg>
+        <span data-i18n="doc_subdomain">سب-دومين</span>
+      </button>
+      <button class="sb-link" onclick="showDoc('custom')">
+        <svg viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>
+        <span data-i18n="doc_custom">دومين مخصص</span>
+      </button>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label" data-i18n="sb_advanced">متقدم</div>
+      <button class="sb-link" onclick="showDoc('ssl')">
+        <svg viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
+        <span>SSL / HTTPS</span>
+      </button>
+      <button class="sb-link" onclick="showDoc('env')">
+        <svg viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"/></svg>
+        <span data-i18n="doc_env">إعدادات المشروع</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="docs-content">
+
+    <!-- INTRO -->
+    <div class="doc-section active" id="doc-intro">
+      <img src="/img/logo.png" alt="Vox Space" style="height:52px;margin-bottom:24px;display:block"/>
+      <h1 class="doc-h1" data-i18n="intro_h">مرحباً بك في Vox Space</h1>
+      <p class="doc-lead" data-i18n="intro_lead">Vox Space منصة استضافة مجانية احترافية. انشر موقعك في ثوانٍ، احصل على سب-دومين تلقائي، وبنية تحتية خاصة بنا بالكامل.</p>
+      <div class="alert alert-success">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span data-i18n="intro_alert">الخطة المجانية تشمل 50 مشروع، سب-دومين، SSL تلقائي، ودومين مخصص — بدون بطاقة ائتمان.</span>
+      </div>
+      <h2 class="doc-h2" data-i18n="intro_what_h">ما هو Vox Space؟</h2>
+      <p class="doc-p" data-i18n="intro_what_p">منصة استضافة للمواقع الستاتيكية مع بنية تحتية خاصة بنا. تدعم HTML/CSS/JS وكل المشاريع الستاتيكية.</p>
+      <h2 class="doc-h2" data-i18n="intro_features_h">ما الذي تحصل عليه؟</h2>
+      <ul class="doc-ul">
+        <li data-i18n="if1">50 مشروع في الخطة المجانية</li>
+        <li data-i18n="if2">سب-دومين تلقائي على voxspace.qzz.io</li>
+        <li data-i18n="if3">SSL/TLS تلقائي على كل المشاريع</li>
+        <li data-i18n="if4">ربط دومين مخصص مجاناً</li>
+        <li data-i18n="if5">نشر عبر GitHub أو ZIP أو ملفات مباشرة</li>
+        <li data-i18n="if6">Analytics أساسي مدمج</li>
+        <li data-i18n="if7">حماية DDoS وشبكة CDN</li>
+      </ul>
+    </div>
+
+    <!-- QUICKSTART -->
+    <div class="doc-section" id="doc-quickstart">
+      <h1 class="doc-h1" data-i18n="qs_h">البدء السريع</h1>
+      <p class="doc-lead" data-i18n="qs_lead">انشر أول مشروع لك في أقل من دقيقتين.</p>
+      <div class="step-cards">
+        <div class="step-card">
+          <div class="step-card-num">1</div>
+          <div>
+            <div class="step-card-t" data-i18n="qs1t">أنشئ حساباً</div>
+            <p class="step-card-d" data-i18n="qs1d">روح <strong>voxspace.qzz.io/auth/register</strong> وسجل بالإيميل أو GitHub.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-num">2</div>
+          <div>
+            <div class="step-card-t" data-i18n="qs2t">افتح الداشبورد</div>
+            <p class="step-card-d" data-i18n="qs2d">من الداشبورد اضغط "مشروع جديد" واختار طريقة الرفع.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-num">3</div>
+          <div>
+            <div class="step-card-t" data-i18n="qs3t">ارفع مشروعك</div>
+            <p class="step-card-d" data-i18n="qs3d">GitHub repo، ZIP، أو ملفات مباشرة — اختار الأسهل ليك.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-num">4</div>
+          <div>
+            <div class="step-card-t" data-i18n="qs4t">موقعك live</div>
+            <p class="step-card-d" data-i18n="qs4d">في ثوانٍ رابطك جاهز: <strong>projectname.voxspace.qzz.io</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GITHUB -->
+    <div class="doc-section" id="doc-github">
+      <h1 class="doc-h1" data-i18n="gh_h">نشر عبر GitHub</h1>
+      <p class="doc-lead" data-i18n="gh_lead">اربط GitHub repo وكل push ينشر تلقائياً.</p>
+      <h2 class="doc-h2" data-i18n="gh_steps_h">الخطوات</h2>
+      <div class="step-cards">
+        <div class="step-card">
+          <div class="step-card-num">1</div>
+          <div><div class="step-card-t" data-i18n="gh1t">من الداشبورد اضغط "مشروع جديد"</div></div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-num">2</div>
+          <div><div class="step-card-t" data-i18n="gh2t">اختار "GitHub Repo"</div><p class="step-card-d" data-i18n="gh2d">هتطلب منك توصل GitHub account للمرة الأولى.</p></div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-num">3</div>
+          <div><div class="step-card-t" data-i18n="gh3t">اختار الـ repo</div><p class="step-card-d" data-i18n="gh3d">حدد الـ branch وأضف اسم المشروع.</p></div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-num">4</div>
+          <div><div class="step-card-t" data-i18n="gh4t">اضغط Deploy</div><p class="step-card-d" data-i18n="gh4d">كل push بعد كده هينشر تلقائياً.</p></div>
+        </div>
+      </div>
+      <div class="alert alert-info">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/></svg>
+        <span data-i18n="gh_note">الـ root directory يجب أن يحتوي على index.html أو يكون محدداً في الإعدادات.</span>
+      </div>
+    </div>
+
+    <!-- ZIP -->
+    <div class="doc-section" id="doc-zip">
+      <h1 class="doc-h1" data-i18n="zip_h">رفع ملف ZIP</h1>
+      <p class="doc-lead" data-i18n="zip_lead">اضغط مشروعك في ZIP وارفعه بالسحب والإفلات.</p>
+      <h2 class="doc-h2" data-i18n="zip_req_h">المتطلبات</h2>
+      <ul class="doc-ul">
+        <li data-i18n="z1">حجم أقصى: 100MB للملف الواحد</li>
+        <li data-i18n="z2">الملف الرئيسي index.html في الـ root</li>
+        <li data-i18n="z3">صيغة ZIP فقط (ليس RAR أو 7z)</li>
+      </ul>
+      <h2 class="doc-h2" data-i18n="zip_how_h">كيف تضغط مشروعك</h2>
+      <div class="code-block">
+        <div class="code-bar"><span>Terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-body"><pre><span class="cm"># ادخل مجلد مشروعك</span>
+<span class="fn">cd</span> my-project/
+
+<span class="cm"># اضغطه في ZIP</span>
+<span class="fn">zip</span> -r my-project.zip .
+
+<span class="cm"># أو على Windows: انقر بالزر الأيمن → Send to → Compressed folder</span></pre></div>
+      </div>
+    </div>
+
+    <!-- FILES -->
+    <div class="doc-section" id="doc-files">
+      <h1 class="doc-h1" data-i18n="files_h">رفع ملفات مباشرة</h1>
+      <p class="doc-lead" data-i18n="files_lead">اسحب ملفاتك أو مجلدك كاملاً وأفلته في المنصة.</p>
+      <h2 class="doc-h2" data-i18n="files_how_h">الطريقة</h2>
+      <div class="step-cards">
+        <div class="step-card">
+          <div class="step-card-num">1</div>
+          <div><div class="step-card-t" data-i18n="ff1">اضغط "مشروع جديد" ← "رفع ملفات"</div></div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-num">2</div>
+          <div><div class="step-card-t" data-i18n="ff2">اسحب المجلد أو الملفات للمنطقة المحددة</div></div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-num">3</div>
+          <div><div class="step-card-t" data-i18n="ff3">أضف اسم المشروع واضغط Deploy</div></div>
+        </div>
+      </div>
+      <div class="alert alert-info">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/></svg>
+        <span data-i18n="files_note">يمكن رفع حتى 500 ملف في كل مشروع. الحجم الأقصى الإجمالي 200MB.</span>
+      </div>
+    </div>
+
+    <!-- SUBDOMAIN -->
+    <div class="doc-section" id="doc-subdomain">
+      <h1 class="doc-h1" data-i18n="sub_h">سب-دومين تلقائي</h1>
+      <p class="doc-lead" data-i18n="sub_lead">كل مشروع يحصل تلقائياً على رابط خاص على نطاق voxspace.</p>
+      <h2 class="doc-h2" data-i18n="sub_format_h">شكل الرابط</h2>
+      <div class="code-block">
+        <div class="code-bar"><span>Format</span></div>
+        <div class="code-body"><pre><span class="str">projectname</span>.voxspace.qzz.io</pre></div>
+      </div>
+      <h2 class="doc-h2" data-i18n="sub_rules_h">قواعد اسم المشروع</h2>
+      <ul class="doc-ul">
+        <li data-i18n="sr1">أحرف صغيرة وأرقام وشرطة (-) فقط</li>
+        <li data-i18n="sr2">لا يبدأ أو ينتهي بشرطة</li>
+        <li data-i18n="sr3">من 3 إلى 63 حرفاً</li>
+        <li data-i18n="sr4">فريد — لا يمكن تكرار نفس الاسم</li>
+      </ul>
+    </div>
+
+    <!-- CUSTOM DOMAIN -->
+    <div class="doc-section" id="doc-custom">
+      <h1 class="doc-h1" data-i18n="cd_h">دومين مخصص</h1>
+      <p class="doc-lead" data-i18n="cd_lead">اربط دومينك الخاص بمشروعك على Vox Space مجاناً.</p>
+      <h2 class="doc-h2" data-i18n="cd_steps_h">الخطوات</h2>
+      <div class="step-cards">
+        <div class="step-card">
+          <div class="step-card-num">1</div>
+          <div><div class="step-card-t" data-i18n="cd1t">افتح إعدادات المشروع</div><p class="step-card-d" data-i18n="cd1d">من الداشبورد ← المشروع ← Domains.</p></div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-num">2</div>
+          <div><div class="step-card-t" data-i18n="cd2t">أضف الدومين</div><p class="step-card-d" data-i18n="cd2d">اكتب دومينك واضغط Add. هتحصل على DNS records.</p></div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-num">3</div>
+          <div><div class="step-card-t" data-i18n="cd3t">حدّث DNS</div><p class="step-card-d" data-i18n="cd3d">أضف الـ CNAME record في DNS provider بتاعك.</p></div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-num">4</div>
+          <div><div class="step-card-t" data-i18n="cd4t">انتظر التفعيل</div><p class="step-card-d" data-i18n="cd4d">من دقائق إلى ساعة حسب الـ DNS provider. SSL يُصدر تلقائياً.</p></div>
+        </div>
+      </div>
+      <h2 class="doc-h2">DNS Record</h2>
+      <div class="code-block">
+        <div class="code-bar"><span>DNS Record</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-body"><pre><span class="kw">Type</span>:  CNAME
+<span class="kw">Name</span>:  <span class="str">@</span> <span class="cm">(أو www)</span>
+<span class="kw">Value</span>: <span class="str">cname.voxspace.qzz.io</span></pre></div>
+      </div>
+    </div>
+
+    <!-- SSL -->
+    <div class="doc-section" id="doc-ssl">
+      <h1 class="doc-h1">SSL / HTTPS</h1>
+      <p class="doc-lead" data-i18n="ssl_lead">كل مشروع على Vox Space محمي تلقائياً بشهادة SSL/TLS بدون أي إعداد.</p>
+      <div class="alert alert-success">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span data-i18n="ssl_auto">SSL يُصدر تلقائياً لكل مشروع جديد وعند ربط دومين مخصص. لا يحتاج أي تدخل منك.</span>
+      </div>
+      <h2 class="doc-h2" data-i18n="ssl_details_h">التفاصيل</h2>
+      <ul class="doc-ul">
+        <li data-i18n="ssl1">شهادة TLS 1.3 على كل المشاريع</li>
+        <li data-i18n="ssl2">تجديد تلقائي قبل انتهاء الصلاحية</li>
+        <li data-i18n="ssl3">HTTP يُحوّل تلقائياً لـ HTTPS</li>
+        <li data-i18n="ssl4">يشمل الدومينات المخصصة</li>
+      </ul>
+    </div>
+
+    <!-- ENV -->
+    <div class="doc-section" id="doc-env">
+      <h1 class="doc-h1" data-i18n="env_h">إعدادات المشروع</h1>
+      <p class="doc-lead" data-i18n="env_lead">تحكم في إعدادات مشروعك من الداشبورد.</p>
+      <h2 class="doc-h2" data-i18n="env_settings_h">الإعدادات المتاحة</h2>
+      <ul class="doc-ul">
+        <li data-i18n="es1">تغيير اسم المشروع والسب-دومين</li>
+        <li data-i18n="es2">ربط أو فك ربط دومين مخصص</li>
+        <li data-i18n="es3">عرض سجل عمليات النشر</li>
+        <li data-i18n="es4">حذف المشروع</li>
+        <li data-i18n="es5">إعادة النشر من آخر نسخة</li>
+      </ul>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  <div class="foot-bottom">
+    <p>© 2026 Vox Space. <span data-i18n="foot_rights">جميع الحقوق محفوظة.</span></p>
+    <div class="foot-right">
+      <img src="/img/logo.png" alt="Vox Space"/>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showDoc(id) {
+  document.querySelectorAll('.doc-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('active'));
+  const el = document.getElementById('doc-' + id);
+  if (el) el.classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo(0, 0);
+}
+function copyCode(btn) {
+  const code = btn.closest('.code-block').querySelector('pre').textContent;
+  navigator.clipboard.writeText(code);
+  btn.textContent = 'Copied!';
+  setTimeout(() => btn.textContent = 'Copy', 2000);
+}
+function searchDocs(val) {
+  const v = val.toLowerCase();
+  document.querySelectorAll('.sb-link').forEach(l => {
+    l.style.display = !v || l.textContent.toLowerCase().includes(v) ? '' : 'none';
+  });
+}
+const i18n={ar:{nav_docs:"التوثيق",nav_pricing:"الأسعار",nav_status:"الحالة",nav_about:"من نحن",nav_login:"دخول",nav_cta:"ابدأ مجاناً",sb_start:"البداية",sb_deploy:"النشر",sb_domains:"الدومينات",sb_advanced:"متقدم",doc_intro:"مقدمة",doc_quick:"البدء السريع",doc_github:"نشر عبر GitHub",doc_zip:"رفع ZIP",doc_files:"رفع ملفات",doc_subdomain:"سب-دومين",doc_custom:"دومين مخصص",doc_env:"إعدادات المشروع",intro_h:"مرحباً بك في Vox Space",intro_lead:"Vox Space منصة استضافة مجانية احترافية. انشر موقعك في ثوانٍ، احصل على سب-دومين تلقائي.",intro_alert:"الخطة المجانية تشمل 50 مشروع، سب-دومين، SSL تلقائي، ودومين مخصص.",intro_what_h:"ما هو Vox Space؟",intro_what_p:"منصة استضافة للمواقع الستاتيكية مع بنية تحتية خاصة بنا.",intro_features_h:"ما الذي تحصل عليه؟",if1:"50 مشروع في الخطة المجانية",if2:"سب-دومين تلقائي على voxspace.qzz.io",if3:"SSL/TLS تلقائي",if4:"ربط دومين مخصص مجاناً",if5:"نشر عبر GitHub أو ZIP أو ملفات",if6:"Analytics أساسي مدمج",if7:"حماية DDoS وشبكة CDN",qs_h:"البدء السريع",qs_lead:"انشر أول مشروع لك في أقل من دقيقتين.",qs1t:"أنشئ حساباً",qs1d:"سجل بالإيميل أو GitHub.",qs2t:"افتح الداشبورد",qs2d:"اضغط 'مشروع جديد' واختار طريقة الرفع.",qs3t:"ارفع مشروعك",qs3d:"GitHub، ZIP، أو ملفات مباشرة.",qs4t:"موقعك live",qs4d:"رابطك جاهز في ثوانٍ.",gh_h:"نشر عبر GitHub",gh_lead:"اربط GitHub repo وكل push ينشر تلقائياً.",gh_steps_h:"الخطوات",gh1t:"من الداشبورد اضغط 'مشروع جديد'",gh2t:"اختار 'GitHub Repo'",gh2d:"هتطلب منك توصل GitHub account.",gh3t:"اختار الـ repo",gh3d:"حدد الـ branch وأضف اسم المشروع.",gh4t:"اضغط Deploy",gh4d:"كل push بعد كده هينشر تلقائياً.",gh_note:"الـ root directory يجب أن يحتوي على index.html.",zip_h:"رفع ملف ZIP",zip_lead:"اضغط مشروعك في ZIP وارفعه بالسحب والإفلات.",zip_req_h:"المتطلبات",z1:"حجم أقصى: 100MB",z2:"index.html في الـ root",z3:"صيغة ZIP فقط",zip_how_h:"كيف تضغط مشروعك",files_h:"رفع ملفات مباشرة",files_lead:"اسحب ملفاتك أو مجلدك وأفلته.",files_how_h:"الطريقة",ff1:"اضغط 'مشروع جديد' ← 'رفع ملفات'",ff2:"اسحب المجلد للمنطقة المحددة",ff3:"أضف اسم المشروع واضغط Deploy",files_note:"حتى 500 ملف، 200MB إجمالي.",sub_h:"سب-دومين تلقائي",sub_lead:"كل مشروع يحصل تلقائياً على رابط خاص.",sub_format_h:"شكل الرابط",sub_rules_h:"قواعد اسم المشروع",sr1:"أحرف صغيرة وأرقام وشرطة فقط",sr2:"لا يبدأ أو ينتهي بشرطة",sr3:"من 3 إلى 63 حرفاً",sr4:"فريد — لا يمكن تكرار نفس الاسم",cd_h:"دومين مخصص",cd_lead:"اربط دومينك الخاص مجاناً.",cd_steps_h:"الخطوات",cd1t:"افتح إعدادات المشروع",cd1d:"من الداشبورد ← المشروع ← Domains.",cd2t:"أضف الدومين",cd2d:"اكتب دومينك واضغط Add.",cd3t:"حدّث DNS",cd3d:"أضف الـ CNAME record في DNS provider.",cd4t:"انتظر التفعيل",cd4d:"SSL يُصدر تلقائياً.",ssl_lead:"كل مشروع محمي تلقائياً بشهادة SSL/TLS.",ssl_auto:"SSL يُصدر تلقائياً لكل مشروع.",ssl_details_h:"التفاصيل",ssl1:"شهادة TLS 1.3",ssl2:"تجديد تلقائي",ssl3:"HTTP يُحوّل لـ HTTPS",ssl4:"يشمل الدومينات المخصصة",env_h:"إعدادات المشروع",env_lead:"تحكم في إعدادات مشروعك.",env_settings_h:"الإعدادات المتاحة",es1:"تغيير اسم المشروع والسب-دومين",es2:"ربط دومين مخصص",es3:"عرض سجل عمليات النشر",es4:"حذف المشروع",es5:"إعادة النشر",foot_rights:"جميع الحقوق محفوظة."},
+en:{nav_docs:"Docs",nav_pricing:"Pricing",nav_status:"Status",nav_about:"About",nav_login:"Log in",nav_cta:"Start Free",sb_start:"Getting Started",sb_deploy:"Deploying",sb_domains:"Domains",sb_advanced:"Advanced",doc_intro:"Introduction",doc_quick:"Quickstart",doc_github:"Deploy via GitHub",doc_zip:"Upload ZIP",doc_files:"Upload Files",doc_subdomain:"Subdomain",doc_custom:"Custom Domain",doc_env:"Project Settings",intro_h:"Welcome to Vox Space",intro_lead:"Vox Space is a free professional hosting platform. Deploy in seconds, get an automatic subdomain, and enjoy infrastructure entirely our own.",intro_alert:"Free plan includes 50 projects, subdomain, automatic SSL, and custom domain — no credit card.",intro_what_h:"What is Vox Space?",intro_what_p:"A static website hosting platform with infrastructure entirely our own.",intro_features_h:"What do you get?",if1:"50 projects on the free plan",if2:"Automatic subdomain on voxspace.qzz.io",if3:"Automatic SSL/TLS on all projects",if4:"Custom domain for free",if5:"Deploy via GitHub, ZIP, or direct files",if6:"Built-in basic analytics",if7:"DDoS protection and CDN",qs_h:"Quickstart",qs_lead:"Deploy your first project in under 2 minutes.",qs1t:"Create an account",qs1d:"Sign up with email or GitHub.",qs2t:"Open the dashboard",qs2d:"Click 'New Project' and choose a deploy method.",qs3t:"Upload your project",qs3d:"GitHub, ZIP, or direct files.",qs4t:"Your site is live",qs4d:"Your link is ready in seconds.",gh_h:"Deploy via GitHub",gh_lead:"Connect a GitHub repo and every push deploys automatically.",gh_steps_h:"Steps",gh1t:"Click 'New Project' from the dashboard",gh2t:"Choose 'GitHub Repo'",gh2d:"You'll be asked to connect your GitHub account the first time.",gh3t:"Select the repo",gh3d:"Choose the branch and add a project name.",gh4t:"Click Deploy",gh4d:"Every push after that deploys automatically.",gh_note:"The root directory must contain index.html.",zip_h:"Upload ZIP",zip_lead:"Zip your project and upload it via drag and drop.",zip_req_h:"Requirements",z1:"Max size: 100MB",z2:"index.html in the root",z3:"ZIP format only",zip_how_h:"How to zip your project",files_h:"Upload Files Directly",files_lead:"Drag your files or entire folder and drop them.",files_how_h:"How to",ff1:"Click 'New Project' → 'Upload Files'",ff2:"Drag the folder to the drop zone",ff3:"Add a project name and click Deploy",files_note:"Up to 500 files, 200MB total.",sub_h:"Automatic Subdomain",sub_lead:"Every project gets a unique subdomain automatically.",sub_format_h:"URL Format",sub_rules_h:"Project Name Rules",sr1:"Lowercase letters, numbers, and hyphens only",sr2:"Cannot start or end with a hyphen",sr3:"3 to 63 characters",sr4:"Must be unique",cd_h:"Custom Domain",cd_lead:"Connect your own domain to your project for free.",cd_steps_h:"Steps",cd1t:"Open project settings",cd1d:"Dashboard → Project → Domains.",cd2t:"Add your domain",cd2d:"Type your domain and click Add. You'll receive DNS records.",cd3t:"Update DNS",cd3d:"Add the CNAME record in your DNS provider.",cd4t:"Wait for activation",cd4d:"SSL is issued automatically.",ssl_lead:"Every project on Vox Space is secured automatically with SSL/TLS.",ssl_auto:"SSL is issued automatically for every new project and custom domain.",ssl_details_h:"Details",ssl1:"TLS 1.3 on all projects",ssl2:"Automatic renewal before expiry",ssl3:"HTTP redirects to HTTPS automatically",ssl4:"Includes custom domains",env_h:"Project Settings",env_lead:"Control your project settings from the dashboard.",env_settings_h:"Available Settings",es1:"Change project name and subdomain",es2:"Connect or disconnect custom domain",es3:"View deploy history",es4:"Delete project",es5:"Redeploy from latest version",foot_rights:"All rights reserved."},
+fr:{nav_docs:"Docs",nav_pricing:"Tarifs",nav_status:"Statut",nav_about:"À propos",nav_login:"Connexion",nav_cta:"Commencer",sb_start:"Démarrage",sb_deploy:"Déploiement",sb_domains:"Domaines",sb_advanced:"Avancé",doc_intro:"Introduction",doc_quick:"Démarrage Rapide",doc_github:"Déployer via GitHub",doc_zip:"Upload ZIP",doc_files:"Upload Fichiers",doc_subdomain:"Sous-domaine",doc_custom:"Domaine Personnalisé",doc_env:"Paramètres Projet",intro_h:"Bienvenue sur Vox Space",intro_lead:"Vox Space est une plateforme d'hébergement gratuite et professionnelle.",intro_alert:"Plan gratuit: 50 projets, sous-domaine, SSL auto, domaine personnalisé.",intro_what_h:"Qu'est-ce que Vox Space?",intro_what_p:"Une plateforme d'hébergement statique avec infrastructure entièrement propriétaire.",intro_features_h:"Ce que vous obtenez",if1:"50 projets sur le plan gratuit",if2:"Sous-domaine automatique",if3:"SSL/TLS automatique",if4:"Domaine personnalisé gratuit",if5:"Déploiement via GitHub, ZIP ou fichiers",if6:"Analytics intégré",if7:"Protection DDoS et CDN",qs_h:"Démarrage Rapide",qs_lead:"Déployez votre premier projet en moins de 2 minutes.",qs1t:"Créez un compte",qs1d:"Inscription avec email ou GitHub.",qs2t:"Ouvrez le tableau de bord",qs2d:"Cliquez 'Nouveau Projet'.",qs3t:"Uploadez votre projet",qs3d:"GitHub, ZIP, ou fichiers directs.",qs4t:"Votre site est en ligne",qs4d:"Votre lien est prêt en secondes.",gh_h:"Déployer via GitHub",gh_lead:"Connectez un repo GitHub et chaque push déploie automatiquement.",gh_steps_h:"Étapes",gh1t:"Cliquez 'Nouveau Projet'",gh2t:"Choisissez 'GitHub Repo'",gh2d:"Vous devrez connecter votre compte GitHub.",gh3t:"Sélectionnez le repo",gh3d:"Choisissez la branche et le nom.",gh4t:"Cliquez Deploy",gh4d:"Chaque push déploie automatiquement.",gh_note:"Le répertoire racine doit contenir index.html.",zip_h:"Upload ZIP",zip_lead:"Zippez votre projet et uploadez-le.",zip_req_h:"Exigences",z1:"Taille max: 100MB",z2:"index.html à la racine",z3:"Format ZIP uniquement",zip_how_h:"Comment zipper",files_h:"Upload Fichiers Directs",files_lead:"Glissez vos fichiers ou dossier.",files_how_h:"Comment faire",ff1:"Cliquez 'Nouveau Projet' → 'Upload Fichiers'",ff2:"Glissez le dossier dans la zone",ff3:"Ajoutez un nom et cliquez Deploy",files_note:"Jusqu'à 500 fichiers, 200MB total.",sub_h:"Sous-domaine Automatique",sub_lead:"Chaque projet obtient un sous-domaine unique automatiquement.",sub_format_h:"Format URL",sub_rules_h:"Règles de nom",sr1:"Lettres minuscules, chiffres et tirets",sr2:"Ne peut pas commencer ou finir par un tiret",sr3:"3 à 63 caractères",sr4:"Doit être unique",cd_h:"Domaine Personnalisé",cd_lead:"Connectez votre propre domaine gratuitement.",cd_steps_h:"Étapes",cd1t:"Ouvrez les paramètres du projet",cd1d:"Tableau de bord → Projet → Domaines.",cd2t:"Ajoutez votre domaine",cd2d:"Tapez votre domaine et cliquez Add.",cd3t:"Mettez à jour DNS",cd3d:"Ajoutez le record CNAME.",cd4t:"Attendez l'activation",cd4d:"SSL est émis automatiquement.",ssl_lead:"Chaque projet est sécurisé automatiquement avec SSL/TLS.",ssl_auto:"SSL émis automatiquement pour chaque projet.",ssl_details_h:"Détails",ssl1:"TLS 1.3 sur tous les projets",ssl2:"Renouvellement automatique",ssl3:"HTTP redirige vers HTTPS",ssl4:"Inclut les domaines personnalisés",env_h:"Paramètres du Projet",env_lead:"Contrôlez les paramètres depuis le tableau de bord.",env_settings_h:"Paramètres Disponibles",es1:"Changer le nom et sous-domaine",es2:"Connecter un domaine personnalisé",es3:"Voir l'historique de déploiement",es4:"Supprimer le projet",es5:"Redéployer",foot_rights:"Tous droits réservés."}};
+function setLang(lang){document.documentElement.lang=lang;document.body.dir=lang==='ar'?'rtl':'ltr';document.body.className=lang==='ar'?'':lang;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('on'));document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('on');const t=i18n[lang];document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k])el.textContent=t[k]});document.querySelector('#searchInput').placeholder=lang==='ar'?'ابحث في التوثيق...':lang==='fr'?'Rechercher...':'Search docs...'}
+</script>
+</body>
+</html>
